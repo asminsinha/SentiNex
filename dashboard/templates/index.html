@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentiNex: SDN Explainable AI Operations Control Center</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <!-- Google Fonts for crisp monospace and clean sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <!-- Top Navigation & Global Telemetry Header -->
+    <header class="app-header">
+        <div class="brand">
+            <div class="brand-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M3 12h3m12 0h3M12 3v3m0 12v3M5.6 5.6l2.1 2.1m8.6 8.6l2.1 2.1M5.6 18.4l2.1-2.1m8.6-8.6l2.1-2.1"></path>
+                </svg>
+            </div>
+            <div>
+                <h1 class="brand-title">SENTINEX <span class="brand-sub">SDN CONTROL PLANE</span></h1>
+                <p class="brand-tagline">Explainable AI Intrusion Detection & Dynamic Flow Mitigation</p>
+            </div>
+        </div>
+
+        <!-- Persistent Navigation Tabs -->
+        <nav class="nav-tabs" role="tablist">
+            <button class="nav-tab active" data-tab="tab-operations" role="tab" id="nav-operations">
+                <span class="tab-badge">OPS</span> Live Operations
+            </button>
+            <button class="nav-tab" data-tab="tab-traffic-lab" role="tab" id="nav-traffic-lab">
+                <span class="tab-badge">LAB</span> Traffic Lab & Simulation
+            </button>
+            <button class="nav-tab" data-tab="tab-incidents" role="tab" id="nav-incidents">
+                <span class="tab-badge">XAI</span> Incidents & Inspector
+                <span class="badge-counter" id="nav-incident-count">0</span>
+            </button>
+        </nav>
+
+        <!-- System Diagnostic Badges -->
+        <div class="system-status-group">
+            <div class="status-pill" id="pill-controller">
+                <span class="status-dot dot-yellow" id="dot-controller"></span>
+                <span class="pill-label">SDN:</span>
+                <span class="pill-val" id="val-controller">Detecting...</span>
+            </div>
+            <div class="status-pill status-pill-interactive" id="pill-model" title="Click to toggle between Random Forest and Deep Learning MLP">
+                <span class="pill-label">Model:</span>
+                <select id="select-global-model" class="pill-select">
+                    <option value="rf" selected>Random Forest (RF)</option>
+                    <option value="mlp">Neural Network (MLP)</option>
+                </select>
+            </div>
+            <div class="status-pill" id="pill-mode">
+                <span class="pill-label">Mode:</span>
+                <span class="pill-val" id="val-mode">Emulation</span>
+            </div>
+            <div class="status-pill" id="pill-sse">
+                <span class="status-dot dot-green" id="dot-sse"></span>
+                <span class="pill-label">Stream:</span>
+                <span class="pill-val" id="val-sse-latency">0 ms</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Multi-Page Container -->
+    <main class="app-main">
+        
+        <!-- ============================================================== -->
+        <!-- PAGE 1: OPERATIONS — LIVE MONITOR                               -->
+        <!-- ============================================================== -->
+        <section id="tab-operations" class="tab-content active">
+            <!-- Telemetry Metric Row -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Observed Packets</span>
+                        <span class="kpi-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        </span>
+                    </div>
+                    <div class="kpi-value" id="kpi-packets">0</div>
+                    <div class="kpi-sub" id="kpi-flows">Flows Tracked: 0</div>
+                </div>
+                <div class="kpi-card danger">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Threats Intercepted</span>
+                        <span class="kpi-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        </span>
+                    </div>
+                    <div class="kpi-value" id="kpi-threats">0</div>
+                    <div class="kpi-sub" id="kpi-threat-breakdown">DoS: 0 | Scan: 0 | Spoof: 0</div>
+                </div>
+                <div class="kpi-card success">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Benign Forwarded</span>
+                        <span class="kpi-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </span>
+                    </div>
+                    <div class="kpi-value" id="kpi-benign">0</div>
+                    <div class="kpi-sub">Standard L2 OpenFlow Forwarding</div>
+                </div>
+                <div class="kpi-card purple">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Quarantined Hosts</span>
+                        <span class="kpi-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </span>
+                    </div>
+                    <div class="kpi-value" id="kpi-quarantined">0</div>
+                    <div class="kpi-sub" id="kpi-mitigation-stats">Active Flow Drop Rules (P:100)</div>
+                </div>
+                <div class="kpi-card telemetry">
+                    <div class="kpi-header">
+                        <span class="kpi-title">Pipeline Latencies</span>
+                        <span class="kpi-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </span>
+                    </div>
+                    <div class="kpi-telemetry-row">
+                        <span>Infer: <strong id="kpi-infer-lat">0.0 ms</strong></span>
+                        <span>XAI: <strong id="kpi-xai-lat">0.0 ms</strong></span>
+                    </div>
+                    <div class="kpi-sub">Measured Real Execution Time</div>
+                </div>
+            </div>
+
+            <!-- Operations Main Viewport: Topology + Event Feed -->
+            <div class="operations-layout">
+                <!-- Left Viewport: Live Topology Graph -->
+                <div class="card topology-container">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <h2 class="card-title">Active SDN Network Topology</h2>
+                            <span class="card-sub" id="topo-meta-text">Linear Topology | 4 Hosts | 2 Switches</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-secondary btn-sm" id="btn-zoom-reset">Reset View</button>
+                            <button class="btn btn-primary btn-sm" id="btn-switch-traffic-lab">Configure Network</button>
+                        </div>
+                    </div>
+
+                    <!-- Topology Visual Canvas / SVG Container -->
+                    <div class="topology-viewport" id="topo-viewport">
+                        <svg id="topo-svg" width="100%" height="100%"></svg>
+                    </div>
+
+                    <!-- Topology Legend & State Glossary -->
+                    <div class="topology-legend">
+                        <span class="legend-item"><span class="legend-color color-benign"></span> Normal / Benign</span>
+                        <span class="legend-item"><span class="legend-color color-threat"></span> Threat Detected</span>
+                        <span class="legend-item"><span class="legend-color color-blocked"></span> Blocked / Quarantined</span>
+                        <span class="legend-item"><span class="legend-color color-failed"></span> Mitigation Failed</span>
+                        <span class="legend-item"><span class="legend-color color-recovering"></span> Recovering</span>
+                        <span class="legend-item"><span class="legend-color color-switch"></span> OpenFlow Switch</span>
+                    </div>
+
+                    <!-- Selected Node Inspector Drawer (hidden until clicked) -->
+                    <div class="node-inspector" id="node-inspector" style="display: none;">
+                        <div class="inspector-header">
+                            <span class="inspector-title" id="insp-title">Host h3</span>
+                            <button class="inspector-close" id="insp-close">&times;</button>
+                        </div>
+                        <div class="inspector-body">
+                            <div class="insp-grid">
+                                <div>IP: <strong id="insp-ip">10.0.0.3</strong></div>
+                                <div>MAC: <code id="insp-mac">00:00:00:00:00:03</code></div>
+                                <div>Connected Switch: <strong id="insp-sw">s2</strong></div>
+                                <div>Status: <span class="badge" id="insp-status">Benign</span></div>
+                                <div>Designated Role: <span id="insp-role">Attacker</span></div>
+                                <div>Packets Sent: <span id="insp-pkts">0</span></div>
+                            </div>
+                            <div class="inspector-actions" id="insp-actions">
+                                <button class="btn btn-warning btn-sm" id="btn-insp-unblock" style="display:none;">Unblock Host</button>
+                                <button class="btn btn-secondary btn-sm" id="btn-insp-inject">Inject from This Host</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Viewport: Live Security & Network Event Stream -->
+                <div class="card event-stream-container">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <h2 class="card-title">Live Security Event Stream</h2>
+                            <span class="card-sub">Real-Time Sub-Second Controller Feed</span>
+                        </div>
+                        <span class="badge badge-live">LIVE</span>
+                    </div>
+
+                    <div class="event-feed-list" id="event-feed">
+                        <div class="empty-state">Waiting for network traffic events...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================================================== -->
+        <!-- PAGE 2: TRAFFIC LAB — NETWORK CONFIGURATION & SIMULATION        -->
+        <!-- ============================================================== -->
+        <section id="tab-traffic-lab" class="tab-content">
+            <div class="lab-grid">
+                
+                <!-- Section A: Network Topology Configurator -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">SDN Network Topology Builder</h2>
+                            <p class="card-sub">Configure switches, host counts, and scalability execution mode</p>
+                        </div>
+                    </div>
+
+                    <form id="form-topo-config" class="form-grid">
+                        <div class="form-group">
+                            <label for="cfg-topo-type">Topology Architecture</label>
+                            <select id="cfg-topo-type" class="form-control">
+                                <option value="linear" selected>Linear (Serial Trunk Switches)</option>
+                                <option value="tree">Tree (Hierarchical Core/Aggregation)</option>
+                                <option value="star">Star (Central Controller Switch)</option>
+                                <option value="mesh">Dual-Core Redundant Mesh</option>
+                            </select>
+                            <small class="form-hint">Determines OpenFlow inter-switch trunk layout.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cfg-host-count">Host Count: <strong id="lbl-host-count">4</strong></label>
+                            <input type="range" id="cfg-host-count" min="4" max="1000" step="1" value="4" class="form-range">
+                            <div class="range-presets">
+                                <button type="button" class="btn-chip" data-hosts="4">4 (Default)</button>
+                                <button type="button" class="btn-chip" data-hosts="16">16 (Medium)</button>
+                                <button type="button" class="btn-chip" data-hosts="64">64 (Max Mininet)</button>
+                                <button type="button" class="btn-chip" data-hosts="250">250 (Scaled)</button>
+                                <button type="button" class="btn-chip" data-hosts="1000">1000 (Stress)</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cfg-exec-mode">Execution Mode</label>
+                            <select id="cfg-exec-mode" class="form-control">
+                                <option value="emulation" selected>Scalable Logical SDN Emulation (1000+ Hosts Safe)</option>
+                                <option value="mininet">Real Mininet Linux Instantiation (Max 64 Hosts)</option>
+                            </select>
+                            <small class="form-hint" id="hint-exec-mode">Scalable Emulation routes traffic directly through SentiNex without exhausting OS network namespaces.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cfg-threat-ratio">Threat Host Proportion: <strong id="lbl-threat-ratio">50%</strong></label>
+                            <input type="range" id="cfg-threat-ratio" min="0" max="100" step="5" value="50" class="form-range">
+                            <small class="form-hint">Percentage of hosts designated as potential attack generators.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cfg-seed">Reproducible Experiment Seed</label>
+                            <input type="number" id="cfg-seed" class="form-control" value="42">
+                            <small class="form-hint">Ensures deterministic benign/attacker host assignment.</small>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="btn-apply-topo">Apply Topology</button>
+                            <button type="button" class="btn btn-danger" id="btn-reset-net">Reset State</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Section B: Manual Traffic Injection Console -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">Manual Traffic Injection Console</h2>
+                            <p class="card-sub">Generate controlled traffic and observe real-time detection & mitigation</p>
+                        </div>
+                    </div>
+
+                    <form id="form-traffic-inject" class="form-grid">
+                        <div class="form-group">
+                            <label for="inj-type">Traffic / Attack Category</label>
+                            <select id="inj-type" class="form-control">
+                                <option value="benign">Benign Web Traffic (HTTP GET)</option>
+                                <option value="dos" selected>DoS SYN Flood Attack (High Rate Burst)</option>
+                                <option value="scan">Reconnaissance (Port Scan Probes)</option>
+                                <option value="spoof">Protocol Spoofing / State Disruption</option>
+                            </select>
+                            <small class="form-hint">Supported detection categories natively recognized by SentiNex.</small>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-half">
+                                <label for="inj-src">Source Host</label>
+                                <select id="inj-src" class="form-control">
+                                    <option value="h3">h3 (10.0.0.3 - DoS Attacker)</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-half">
+                                <label for="inj-dst">Target Victim Host</label>
+                                <select id="inj-dst" class="form-control">
+                                    <option value="h2">h2 (10.0.0.2 - Target Server)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-half">
+                                <label for="inj-count">Packet Count: <strong id="lbl-inj-count">15</strong></label>
+                                <input type="range" id="inj-count" min="1" max="100" value="15" class="form-range">
+                            </div>
+                            <div class="form-group col-half">
+                                <label for="inj-delay">Packet Delay: <strong id="lbl-inj-delay">5 ms</strong></label>
+                                <input type="range" id="inj-delay" min="0" max="100" value="5" class="form-range">
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="btn-inject-now">
+                                <span>Inject Traffic</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Real-Time Injection Feedback Card -->
+                    <div class="injection-feedback" id="inj-feedback" style="display: none;">
+                        <h4 class="feedback-title" id="fb-title">Traffic Injected Successfully</h4>
+                        <div class="feedback-grid">
+                            <div>Ground Truth: <strong id="fb-gt">DoS SYN Flood</strong></div>
+                            <div>Observed Packets: <strong id="fb-pkts">15</strong></div>
+                            <div>Detector Classification: <span class="badge" id="fb-pred">Denial of Service</span></div>
+                            <div>SDN Mitigation: <span class="badge" id="fb-mit">DROP_FLOW_RULE</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section C: Automated Simulation Mode -->
+                <div class="card full-width">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">Automated Network Simulation Lab</h2>
+                            <p class="card-sub">Generate continuous mixed benign and attack traffic with background controls</p>
+                        </div>
+                        <div class="sim-status-banner">
+                            Status: <span class="badge badge-neutral" id="sim-status-badge">STOPPED</span>
+                        </div>
+                    </div>
+
+                    <div class="sim-controls-wrapper">
+                        <div class="sim-settings">
+                            <div class="form-group">
+                                <label for="sim-pace">Injection Pace: <strong id="lbl-sim-pace">2.0s</strong> per event</label>
+                                <input type="range" id="sim-pace" min="5" max="50" value="20" class="form-range">
+                            </div>
+                            <div class="form-group">
+                                <label for="sim-seed">Simulation Seed</label>
+                                <input type="number" id="sim-seed" class="form-control" value="100" style="width: 140px;">
+                            </div>
+                        </div>
+
+                        <div class="sim-button-group">
+                            <button class="btn btn-success" id="btn-sim-start">Start Simulation</button>
+                            <button class="btn btn-warning" id="btn-sim-pause" disabled>Pause</button>
+                            <button class="btn btn-secondary" id="btn-sim-stop" disabled>Stop</button>
+                            <button class="btn btn-danger" id="btn-sim-reset">Reset All</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ============================================================== -->
+        <!-- PAGE 3: INCIDENTS — XAI & FLOW INSPECTOR                        -->
+        <!-- ============================================================== -->
+        <section id="tab-incidents" class="tab-content">
+            <div class="incidents-layout">
+                
+                <!-- Left Pane: Searchable & Filterable Incidents Audit Log -->
+                <div class="card incident-list-card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">Threat Incidents Audit Log</h2>
+                            <p class="card-sub">Chronological register of classified intrusions</p>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" id="btn-refresh-incidents">Refresh</button>
+                    </div>
+
+                    <div class="incident-filters">
+                        <input type="text" id="inc-search" placeholder="Search by IP, Category, or ID..." class="form-control">
+                        <select id="inc-filter-cat" class="form-control">
+                            <option value="">All Categories</option>
+                            <option value="DoS">Denial of Service (DoS)</option>
+                            <option value="Scan">Reconnaissance (Port Scan)</option>
+                            <option value="Spoof">Protocol Spoofing</option>
+                        </select>
+                    </div>
+
+                    <div class="incident-table-wrapper">
+                        <table class="data-table" id="table-incidents">
+                            <thead>
+                                <tr>
+                                    <th>Incident ID</th>
+                                    <th>Timestamp</th>
+                                    <th>Attacker IP</th>
+                                    <th>Threat Category</th>
+                                    <th>Confidence</th>
+                                    <th>SDN Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="incidents-tbody">
+                                <tr>
+                                    <td colspan="7" class="text-center">No security incidents recorded yet.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Right Pane: Deep-Dive XAI & OpenFlow Inspector -->
+                <div class="card incident-detail-card" id="incident-detail-pane">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title" id="detail-title">Incident Deep-Dive Inspector</h2>
+                            <p class="card-sub" id="detail-sub">Select an incident from the log to view SHAP & LIME attributions</p>
+                        </div>
+                        <div id="detail-unblock-wrapper" style="display:none;">
+                            <button class="btn btn-warning btn-sm" id="btn-detail-unblock">Release / Unblock Host</button>
+                        </div>
+                    </div>
+
+                    <div id="detail-empty-view" class="empty-state">
+                        <p>No incident selected. Click <strong>"Inspect"</strong> on any incident in the audit table.</p>
+                    </div>
+
+                    <div id="detail-content-view" style="display:none;">
+                        <!-- Pipeline Stage Timing Tracer -->
+                        <div class="detail-section">
+                            <h3 class="section-title">End-to-End Pipeline Stage Latencies</h3>
+                            <div class="stage-pipeline-trace">
+                                <div class="trace-step">
+                                    <span class="trace-label">Extraction</span>
+                                    <span class="trace-val" id="trace-extract">0.5 ms</span>
+                                </div>
+                                <div class="trace-arrow">→</div>
+                                <div class="trace-step">
+                                    <span class="trace-label">ML Inference</span>
+                                    <span class="trace-val" id="trace-infer">30.0 ms</span>
+                                </div>
+                                <div class="trace-arrow">→</div>
+                                <div class="trace-step">
+                                    <span class="trace-label">XAI Attribution</span>
+                                    <span class="trace-val" id="trace-xai">1800 ms</span>
+                                </div>
+                                <div class="trace-arrow">→</div>
+                                <div class="trace-step">
+                                    <span class="trace-label">SDN Mitigation</span>
+                                    <span class="trace-val" id="trace-mit">0.2 ms</span>
+                                </div>
+                                <div class="trace-arrow">→</div>
+                                <div class="trace-step highlight">
+                                    <span class="trace-label">Total Time</span>
+                                    <span class="trace-val" id="trace-total">1830 ms</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Incident Summary Attributes -->
+                        <div class="detail-section">
+                            <h3 class="section-title">Incident Telemetry & Decision Attributes</h3>
+                            <div class="attribute-grid">
+                                <div class="attr-item"><span class="attr-name">Incident ID:</span> <span class="attr-val" id="det-id">-</span></div>
+                                <div class="attr-item"><span class="attr-name">Attacker Host IP:</span> <span class="attr-val highlight-red" id="det-src">-</span></div>
+                                <div class="attr-item"><span class="attr-name">Victim Target IP:</span> <span class="attr-val" id="det-dst">-</span></div>
+                                <div class="attr-item"><span class="attr-name">Model Confidence:</span> <span class="attr-val highlight-blue" id="det-conf">-</span></div>
+                                <div class="attr-item"><span class="attr-name">Ground Truth (Lab):</span> <span class="attr-val" id="det-gt">-</span></div>
+                                <div class="attr-item"><span class="attr-name">Mitigation Action:</span> <span class="attr-val highlight-purple" id="det-mit">-</span></div>
+                            </div>
+                        </div>
+
+                        <!-- XAI Section: LIME & SHAP Charts -->
+                        <div class="detail-section">
+                            <h3 class="section-title">Explainable AI (XAI) Attribution Breakdown</h3>
+                            
+                            <!-- Non-expert Layman Explanation Card -->
+                            <div class="layman-explanation-card">
+                                <div class="layman-header">
+                                    <span class="layman-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                    </span>
+                                    <h4>Plain-English Operator Explanation</h4>
+                                </div>
+                                <p id="layman-text" class="layman-body">Analyzing model attributions...</p>
+                            </div>
+
+                            <div class="xai-dual-grid">
+                                <!-- SHAP Global Shapley Value Impacts -->
+                                <div class="xai-box">
+                                    <h4>SHAP Feature Impact Scores</h4>
+                                    <p class="xai-desc">Measures marginal contribution of each metric towards the attack classification.</p>
+                                    <div class="chart-container" id="shap-chart"></div>
+                                </div>
+
+                                <!-- LIME Local Linear Explanations -->
+                                <div class="xai-box">
+                                    <h4>LIME Local Feature Attributions</h4>
+                                    <p class="xai-desc">Local surrogate model weights and decision thresholds in this specific instance.</p>
+                                    <div class="chart-container" id="lime-chart"></div>
+                                </div>
+                            </div>
+
+                            <!-- Scientific Limitations Disclaimer -->
+                            <div class="disclaimer-note">
+                                <strong>Scientific Interpretation Notice:</strong>
+                                SHAP and LIME values represent statistical attribution models of internal neural network and ensemble decision surfaces.
+                                Positive scores push towards attack; negative scores push towards benign. They explain why the model made this classification, but do not constitute physical causality.
+                            </div>
+                        </div>
+
+                        <!-- OpenFlow 1.3 Flow Table Inspector -->
+                        <div class="detail-section">
+                            <h3 class="section-title">OpenFlow 1.3 Switch Flow Tables</h3>
+                            <p class="section-desc">Active flow rules currently installed across connected SDN switches.</p>
+                            <div class="flow-tabs" id="flow-switch-tabs">
+                                <!-- Dynamic Switch Tabs (s1, s2, ...) -->
+                            </div>
+                            <div class="flow-table-container">
+                                <table class="data-table" id="table-flows">
+                                    <thead>
+                                        <tr>
+                                            <th>Table ID</th>
+                                            <th>Priority</th>
+                                            <th>Match Criteria</th>
+                                            <th>Actions</th>
+                                            <th>Idle/Hard Timeout</th>
+                                            <th>Installed At</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="flows-tbody">
+                                        <tr>
+                                            <td colspan="6">Loading switch flow rules...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Application JavaScript Modules -->
+    <script src="/static/js/xai_charts.js"></script>
+    <script src="/static/js/topology.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
