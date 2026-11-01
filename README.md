@@ -1,8 +1,8 @@
 
 
-\# SentiNex
+# SentiNex
 
-\### Explainable AI for Intrusion Detection and Dynamic Mitigation in Software-Defined Networks
+### Explainable AI for Intrusion Detection and Dynamic Mitigation in Software-Defined Networks
 
 
 
@@ -22,27 +22,27 @@ SentiNex provides two execution environments: scalable logical SDN emulation for
 
 
 
-\## 1. Key Features
+## 1. Key Features
 
 
 
-\- \*\*Machine Learning-Based Intrusion Detection:\*\* Random Forest and Multi-Layer Perceptron (MLP) models for network traffic classification.
+\- **Machine Learning-Based Intrusion Detection:** Random Forest and Multi-Layer Perceptron (MLP) models for network traffic classification.
 
-\- \*\*Explainable AI:\*\* SHAP and LIME feature attribution to explain why traffic is classified as malicious or benign.
+\- **Explainable AI:** SHAP and LIME feature attribution to explain why traffic is classified as malicious or benign.
 
-\- \*\*Dynamic SDN Mitigation:\*\* OpenFlow 1.3-based traffic filtering and host quarantine through dynamically installed flow rules.
+\- **Dynamic SDN Mitigation:** OpenFlow 1.3-based traffic filtering and host quarantine through dynamically installed flow rules.
 
-\- \*\*Scalable Network Emulation:\*\* Configurable logical topologies supporting 1,000+ hosts.
+\- **Scalable Network Emulation:** Configurable logical topologies supporting 1,000+ hosts.
 
-\- \*\*Real Mininet Integration:\*\* Network namespace-based emulation with Open vSwitch and a Ryu SDN controller.
+\- **Real Mininet Integration:** Network namespace-based emulation with Open vSwitch and a Ryu SDN controller.
 
-\- \*\*Interactive Operations Dashboard:\*\* Live network topology, security event monitoring, incident investigation, and flow-table inspection.
+\- **Interactive Operations Dashboard:** Live network topology, security event monitoring, incident investigation, and flow-table inspection.
 
-\- \*\*Traffic Simulation:\*\* Benign traffic, DoS attacks, port scanning, and protocol spoofing scenarios.
+\- **Traffic Simulation:** Benign traffic, DoS attacks, port scanning, and protocol spoofing scenarios.
 
-\- \*\*Model Selection:\*\* Switch between Random Forest and MLP inference models.
+\- **Model Selection:** Switch between Random Forest and MLP inference models.
 
-\- \*\*Operational Monitoring:\*\* Controller connectivity, model status, event streaming, and pipeline timing information.
+\- **Operational Monitoring:** Controller connectivity, model status, event streaming, and pipeline timing information.
 
 
 
@@ -50,7 +50,7 @@ SentiNex provides two execution environments: scalable logical SDN emulation for
 
 
 
-\## 2. Architecture and Execution Modes
+## 2. Architecture and Execution Modes
 
 
 
@@ -76,7 +76,7 @@ SentiNex supports two operational modes.
 
 
 
-\### Scalable Logical SDN Emulation
+### Scalable Logical SDN Emulation
 
 
 
@@ -88,7 +88,7 @@ It integrates with the machine learning inference and explainability pipeline, e
 
 
 
-\### Real Mininet Mode
+### Real Mininet Mode
 
 
 
@@ -100,7 +100,7 @@ Switches communicate with the Ryu controller using OpenFlow 1.3 over TCP port `6
 
 
 
-\*\*Scalability consideration:\*\* Real Mininet mode is limited to 64 instantiated hosts in the current configuration. Larger experiments should use scalable logical emulation, which supports 1,000+ hosts without creating an equivalent number of operating-system network namespaces.
+**Scalability consideration:** Real Mininet mode is limited to 64 instantiated hosts in the current configuration. Larger experiments should use scalable logical emulation, which supports 1,000+ hosts without creating an equivalent number of operating-system network namespaces.
 
 
 
@@ -108,7 +108,7 @@ Switches communicate with the Ryu controller using OpenFlow 1.3 over TCP port `6
 
 
 
-\## 3. Intrusion Detection and Threat Classification
+## 3. Intrusion Detection and Threat Classification
 
 
 
@@ -134,11 +134,11 @@ The classification pipeline distinguishes four traffic categories:
 
 
 
-\### Detection Characteristics
+### Detection Characteristics
 
 
 
-\*\*Denial of Service\*\*
+**Denial of Service**
 
 \- Elevated packet transmission rates.
 
@@ -148,7 +148,7 @@ The classification pipeline distinguishes four traffic categories:
 
 
 
-\*\*Reconnaissance\*\*
+**Reconnaissance**
 
 \- Repeated attempts to access different destination ports.
 
@@ -156,7 +156,7 @@ The classification pipeline distinguishes four traffic categories:
 
 
 
-\*\*Protocol Spoofing / State Disruption\*\*
+**Protocol Spoofing / State Disruption**
 
 \- Abnormal relationships between connection state and TTL-related features.
 
@@ -164,7 +164,7 @@ The classification pipeline distinguishes four traffic categories:
 
 
 
-\### Dynamic Mitigation
+### Dynamic Mitigation
 
 
 
@@ -184,7 +184,7 @@ Benign traffic continues through standard forwarding behaviour.
 
 
 
-\## 4. Technology Stack
+## 4. Technology Stack
 
 
 
@@ -220,7 +220,7 @@ Benign traffic continues through standard forwarding behaviour.
 
 
 
-\## 5. Application Interface
+## 5. Application Interface
 
 
 
@@ -228,7 +228,7 @@ SentiNex provides a multi-page security operations interface.
 
 
 
-\### Live Operations
+### Live Operations
 
 
 
@@ -246,7 +246,7 @@ SentiNex provides a multi-page security operations interface.
 
 
 
-\### Traffic Lab and Simulation
+### Traffic Lab and Simulation
 
 
 
@@ -266,7 +266,7 @@ SentiNex provides a multi-page security operations interface.
 
 
 
-\### Incidents and Flow Inspector
+### Incidents and Flow Inspector
 
 
 
@@ -290,7 +290,7 @@ SentiNex provides a multi-page security operations interface.
 
 
 
-\## 6. Quick Start — Windows
+## 6. Quick Start — Windows
 
 
 
@@ -298,7 +298,7 @@ The recommended way to launch the web application and scalable emulation environ
 
 
 
-\### Prerequisites
+### Prerequisites
 
 
 
@@ -310,7 +310,7 @@ The recommended way to launch the web application and scalable emulation environ
 
 
 
-\### Launch the application
+### Launch the application
 
 
 
@@ -320,7 +320,7 @@ Open PowerShell in the project directory:
 
 ```powershell
 
-.\\start\_sentinex.ps1
+.\\start_sentinex.ps1
 
 ```
 
@@ -338,7 +338,7 @@ http://127.0.0.1:5000
 
 
 
-\### Running the integration tests
+### Running the integration tests
 
 
 
@@ -348,7 +348,7 @@ From the project root, execute:
 
 ```powershell
 
-.\\venv\\Scripts\\python.exe tests/test\_sentinex\_integration.py
+.\\venv\\Scripts\\python.exe tests/test_sentinex_integration.py
 
 ```
 
@@ -362,7 +362,7 @@ The integration suite covers model inference, feature extraction, explainability
 
 
 
-\## 7. Real SDN Execution — WSL2 / Linux
+## 7. Real SDN Execution — WSL2 / Linux
 
 
 
@@ -370,7 +370,7 @@ Real Mininet execution requires an Ubuntu/WSL2 or Linux environment with Open vS
 
 
 
-\### Step 1: Start Open vSwitch
+### Step 1: Start Open vSwitch
 
 
 
@@ -384,7 +384,7 @@ sudo ovs-vsctl show
 
 
 
-\### Step 2: Launch the Ryu controller
+### Step 2: Launch the Ryu controller
 
 
 
@@ -406,7 +406,7 @@ Launch the controller:
 
 ```bash
 
-python3 run\_ryu.py src/ryu\_controller.py
+python3 run_ryu.py src/ryu_controller.py
 
 ```
 
@@ -422,7 +422,7 @@ The controller uses:
 
 
 
-\### Step 3: Create a Mininet topology
+### Step 3: Create a Mininet topology
 
 
 
@@ -434,7 +434,7 @@ Open a second WSL2 terminal:
 
 cd /mnt/c/Users/<windows-user>/SentiNex
 
-sudo python3 src/sdn\_topology.py --topo linear --hosts 4
+sudo python3 src/sdn_topology.py --topo linear --hosts 4
 
 ```
 
@@ -446,33 +446,33 @@ Supported topology configurations:
 
 ```bash
 
-\# Linear topology
+# Linear topology
 
-sudo python3 src/sdn\_topology.py --topo linear --hosts 4
-
-
-
-\# Tree topology
-
-sudo python3 src/sdn\_topology.py --topo tree --hosts 8
+sudo python3 src/sdn_topology.py --topo linear --hosts 4
 
 
 
-\# Star topology
+# Tree topology
 
-sudo python3 src/sdn\_topology.py --topo star --hosts 6
+sudo python3 src/sdn_topology.py --topo tree --hosts 8
 
 
 
-\# Mesh topology
+# Star topology
 
-sudo python3 src/sdn\_topology.py --topo mesh --hosts 8
+sudo python3 src/sdn_topology.py --topo star --hosts 6
+
+
+
+# Mesh topology
+
+sudo python3 src/sdn_topology.py --topo mesh --hosts 8
 
 ```
 
 
 
-\### Step 4: Generate traffic
+### Step 4: Generate traffic
 
 
 
@@ -482,21 +482,21 @@ From the Mininet CLI:
 
 ```bash
 
-\# Generate benign web traffic
+# Generate benign web traffic
 
-mininet> h1 python3 src/traffic\_generator.py benign --target 10.0.0.2
-
-
-
-\# Generate a DoS SYN flood
-
-mininet> h3 python3 src/traffic\_generator.py dos --target 10.0.0.2 --count 50
+mininet> h1 python3 src/traffic_generator.py benign --target 10.0.0.2
 
 
 
-\# Generate reconnaissance / port-scan traffic
+# Generate a DoS SYN flood
 
-mininet> h4 python3 src/traffic\_generator.py scan --target 10.0.0.2
+mininet> h3 python3 src/traffic_generator.py dos --target 10.0.0.2 --count 50
+
+
+
+# Generate reconnaissance / port-scan traffic
+
+mininet> h4 python3 src/traffic_generator.py scan --target 10.0.0.2
 
 ```
 
@@ -510,21 +510,21 @@ These scenarios allow the detection and mitigation pipeline to be evaluated agai
 
 
 
-\## 8. Model Configuration
+## 8. Model Configuration
 
 
 
-SentiNex supports switching between the Random Forest and MLP models through the `SENTINEX\_MODEL` environment variable.
+SentiNex supports switching between the Random Forest and MLP models through the `SENTINEX_MODEL` environment variable.
 
 
 
-\### Random Forest
+### Random Forest
 
 
 
 ```powershell
 
-$env:SENTINEX\_MODEL = "rf"
+$env:SENTINEX_MODEL = "rf"
 
 python dashboard/app.py
 
@@ -532,13 +532,13 @@ python dashboard/app.py
 
 
 
-\### Multi-Layer Perceptron
+### Multi-Layer Perceptron
 
 
 
 ```powershell
 
-$env:SENTINEX\_MODEL = "mlp"
+$env:SENTINEX_MODEL = "mlp"
 
 python dashboard/app.py
 
@@ -554,11 +554,11 @@ The default model selection can be configured through the application environmen
 
 
 
-\## 9. Troubleshooting
+## 9. Troubleshooting
 
 
 
-\### Port 5000 is already in use
+### Port 5000 is already in use
 
 
 
@@ -568,7 +568,7 @@ Choose another application port:
 
 ```powershell
 
-$env:SENTINEX\_PORT = "5050"
+$env:SENTINEX_PORT = "5050"
 
 python dashboard/app.py
 
@@ -588,7 +588,7 @@ http://127.0.0.1:5050
 
 
 
-\### Ryu OF 1.3 Emulated vs. Ryu Connected
+### Ryu OF 1.3 Emulated vs. Ryu Connected
 
 
 
@@ -596,9 +596,9 @@ These statuses distinguish the execution environments:
 
 
 
-\- \*\*OF 1.3 Emulated:\*\* The application is operating with its logical OpenFlow 1.3 emulation pipeline without a connected real Ryu controller.
+\- **OF 1.3 Emulated:** The application is operating with its logical OpenFlow 1.3 emulation pipeline without a connected real Ryu controller.
 
-\- \*\*Ryu Connected:\*\* The application has detected the configured Ryu controller connection.
+\- **Ryu Connected:** The application has detected the configured Ryu controller connection.
 
 
 
@@ -606,7 +606,7 @@ Logical emulation provides a separate execution environment; it should not be co
 
 
 
-\### Mininet host limitations
+### Mininet host limitations
 
 
 
@@ -622,7 +622,7 @@ For larger experiments, use scalable logical emulation.
 
 
 
-\## 10. Repository Structure
+## 10. Repository Structure
 
 
 
@@ -646,11 +646,11 @@ SentiNex/
 
 │
 
-├── run\_ryu.py           # Ryu controller launcher
+├── run_ryu.py           # Ryu controller launcher
 
-├── start\_sentinex.ps1   # Windows application startup script
+├── start_sentinex.ps1   # Windows application startup script
 
-├── RUN\_GUIDE.md         # Detailed operator and execution guide
+├── RUN_GUIDE.md         # Detailed operator and execution guide
 
 ├── README.md            # Project overview and quick-start documentation
 
@@ -664,7 +664,7 @@ SentiNex/
 
 
 
-\## 11. Datasets and Model Artifacts
+## 11. Datasets and Model Artifacts
 
 
 
@@ -694,7 +694,7 @@ Large model artifacts may be maintained using Git Large File Storage (Git LFS).
 
 
 
-\## 12. Detailed Documentation
+## 12. Detailed Documentation
 
 
 
@@ -702,7 +702,7 @@ For the complete operator instructions, including Windows/WSL2 setup, controller
 
 
 
-\*\*\[RUN\_GUIDE.md](RUN\_GUIDE.md)\*\*
+**[RUN_GUIDE.md](RUN_GUIDE.md)**
 
 
 
@@ -710,7 +710,7 @@ For the complete operator instructions, including Windows/WSL2 setup, controller
 
 
 
-\## 13. Project Scope
+## 13. Project Scope
 
 
 
