@@ -177,29 +177,17 @@ Benign traffic continues through standard forwarding behaviour.
 
 
 | Component | Technologies |
-
 |---|---|
-
 | Programming Language | Python |
-
 | Machine Learning | Scikit-learn, TensorFlow / Keras |
-
 | Explainable AI | SHAP, LIME |
-
 | SDN Controller | Ryu |
-
 | Network Emulation | Mininet, Open vSwitch |
-
 | Network Protocol | OpenFlow 1.3 |
-
 | Backend | Flask, Python REST APIs |
-
 | Frontend | HTML, CSS, JavaScript |
-
 | Real-Time Communication | Server-Sent Events (SSE) |
-
 | Data Processing | NumPy, Pandas |
-
 | Operating Environments | Windows, WSL2, Ubuntu / Linux |
 
 
