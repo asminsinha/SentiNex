@@ -700,5 +700,10 @@ Its dual-mode architecture supports both large-scale logical network experiments
 
 ---
 
+## Author
 
+**Asmin Sinha**  
+B.Tech Computer Science and Engineering (AI & ML)  
+Vellore Institute of Technology, Vellore
 
+*Designed and developed by Asmin Sinha.*
