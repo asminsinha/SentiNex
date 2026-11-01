@@ -18,7 +18,7 @@ SentiNex provides two execution environments: scalable logical SDN emulation for
 
 
 
-\---
+---
 
 
 
@@ -26,27 +26,27 @@ SentiNex provides two execution environments: scalable logical SDN emulation for
 
 
 
-\- **Machine Learning-Based Intrusion Detection:** Random Forest and Multi-Layer Perceptron (MLP) models for network traffic classification.
+- **Machine Learning-Based Intrusion Detection:** Random Forest and Multi-Layer Perceptron (MLP) models for network traffic classification.
 
-\- **Explainable AI:** SHAP and LIME feature attribution to explain why traffic is classified as malicious or benign.
+- **Explainable AI:** SHAP and LIME feature attribution to explain why traffic is classified as malicious or benign.
 
-\- **Dynamic SDN Mitigation:** OpenFlow 1.3-based traffic filtering and host quarantine through dynamically installed flow rules.
+- **Dynamic SDN Mitigation:** OpenFlow 1.3-based traffic filtering and host quarantine through dynamically installed flow rules.
 
-\- **Scalable Network Emulation:** Configurable logical topologies supporting 1,000+ hosts.
+- **Scalable Network Emulation:** Configurable logical topologies supporting 1,000+ hosts.
 
-\- **Real Mininet Integration:** Network namespace-based emulation with Open vSwitch and a Ryu SDN controller.
+- **Real Mininet Integration:** Network namespace-based emulation with Open vSwitch and a Ryu SDN controller.
 
-\- **Interactive Operations Dashboard:** Live network topology, security event monitoring, incident investigation, and flow-table inspection.
+- **Interactive Operations Dashboard:** Live network topology, security event monitoring, incident investigation, and flow-table inspection.
 
-\- **Traffic Simulation:** Benign traffic, DoS attacks, port scanning, and protocol spoofing scenarios.
+- **Traffic Simulation:** Benign traffic, DoS attacks, port scanning, and protocol spoofing scenarios.
 
-\- **Model Selection:** Switch between Random Forest and MLP inference models.
+- **Model Selection:** Switch between Random Forest and MLP inference models.
 
-\- **Operational Monitoring:** Controller connectivity, model status, event streaming, and pipeline timing information.
+- **Operational Monitoring:** Controller connectivity, model status, event streaming, and pipeline timing information.
 
 
 
-\---
+---
 
 
 
@@ -59,19 +59,12 @@ SentiNex supports two operational modes.
 
 
 | Capability | Scalable Logical SDN Emulation | Real Mininet Mode |
-
 |---|---|---|
-
 | Environment | Windows, Linux, WSL2 | Ubuntu, WSL2, Linux VM |
-
 | Host capacity | 2–1,000+ | 2–64 |
-
 | OpenFlow representation | Logical flow-table simulation | Open vSwitch flow tables |
-
 | Network isolation | Logical emulation | Linux network namespaces |
-
 | Controller integration | Integrated emulation pipeline | Ryu SDN controller |
-
 | Primary purpose | Large-scale experiments | Realistic network emulation |
 
 
@@ -104,7 +97,7 @@ Switches communicate with the Ryu controller using OpenFlow 1.3 over TCP port `6
 
 
 
-\---
+---
 
 
 
@@ -121,15 +114,10 @@ The classification pipeline distinguishes four traffic categories:
 
 
 | Traffic Category | Detection Characteristics | Mitigation / Handling |
-
 |---|---|---|
-
 | Denial of Service (DoS/DDoS) | Elevated packet rates, packet volume, and concentrated SYN activity | Priority 100 OpenFlow DROP rules |
-
 | Reconnaissance | Repeated connections to distinct destination ports and scanning-related flow characteristics | Priority 100 OpenFlow DROP rules |
-
 | Protocol Spoofing / State Disruption | Abnormal state-to-TTL relationships and inconsistent protocol characteristics | Priority 100 OpenFlow DROP rules |
-
 | Benign Traffic | Normal network communication patterns | Standard Layer 2 forwarding |
 
 
@@ -140,27 +128,27 @@ The classification pipeline distinguishes four traffic categories:
 
 **Denial of Service**
 
-\- Elevated packet transmission rates.
+- Elevated packet transmission rates.
 
-\- High packet counts.
+- High packet counts.
 
-\- Concentrated SYN flag activity.
+- Concentrated SYN flag activity.
 
 
 
 **Reconnaissance**
 
-\- Repeated attempts to access different destination ports.
+- Repeated attempts to access different destination ports.
 
-\- Elevated connection tracking and port activity.
+- Elevated connection tracking and port activity.
 
 
 
 **Protocol Spoofing / State Disruption**
 
-\- Abnormal relationships between connection state and TTL-related features.
+- Abnormal relationships between connection state and TTL-related features.
 
-\- Inconsistent source and destination TTL characteristics.
+- Inconsistent source and destination TTL characteristics.
 
 
 
@@ -180,7 +168,7 @@ Benign traffic continues through standard forwarding behaviour.
 
 
 
-\---
+---
 
 
 
@@ -216,7 +204,7 @@ Benign traffic continues through standard forwarding behaviour.
 
 
 
-\---
+---
 
 
 
@@ -232,17 +220,17 @@ SentiNex provides a multi-page security operations interface.
 
 
 
-\- Connection status of the Ryu SDN controller.
+- Connection status of the Ryu SDN controller.
 
-\- Active machine learning model and execution mode.
+- Active machine learning model and execution mode.
 
-\- Interactive SVG network topology with zoom and pan controls.
+- Interactive SVG network topology with zoom and pan controls.
 
-\- Host and switch inspection, including IP, MAC, port, and quarantine information.
+- Host and switch inspection, including IP, MAC, port, and quarantine information.
 
-\- Live security event stream with model predictions and confidence scores.
+- Live security event stream with model predictions and confidence scores.
 
-\- Direct access to explainability information for detected events.
+- Direct access to explainability information for detected events.
 
 
 
@@ -250,19 +238,19 @@ SentiNex provides a multi-page security operations interface.
 
 
 
-\- Configurable Linear, Tree, Star, and Mesh topologies.
+- Configurable Linear, Tree, Star, and Mesh topologies.
 
-\- Host count and threat-host ratio configuration.
+- Host count and threat-host ratio configuration.
 
-\- Experiment seed configuration.
+- Experiment seed configuration.
 
-\- Manual traffic injection with configurable source, destination, packet count, and traffic type.
+- Manual traffic injection with configurable source, destination, packet count, and traffic type.
 
-\- Ground-truth versus model-prediction comparison.
+- Ground-truth versus model-prediction comparison.
 
-\- Automated traffic generation with Start, Pause, Stop, and Reset controls.
+- Automated traffic generation with Start, Pause, Stop, and Reset controls.
 
-\- Adjustable simulation pace.
+- Adjustable simulation pace.
 
 
 
@@ -270,23 +258,23 @@ SentiNex provides a multi-page security operations interface.
 
 
 
-\- Searchable and filterable security incident records.
+- Searchable and filterable security incident records.
 
-\- Pipeline execution timing across extraction, inference, explainability, and mitigation.
+- Pipeline execution timing across extraction, inference, explainability, and mitigation.
 
-\- Plain-English explanations of model predictions.
+- Plain-English explanations of model predictions.
 
-\- SHAP and LIME feature-attribution visualizations.
+- SHAP and LIME feature-attribution visualizations.
 
-\- OpenFlow switch flow-table inspection.
+- OpenFlow switch flow-table inspection.
 
-\- Visibility into priority, match criteria, actions, and timeouts.
+- Visibility into priority, match criteria, actions, and timeouts.
 
-\- Host quarantine management with release/unblock functionality.
+- Host quarantine management with release/unblock functionality.
 
 
 
-\---
+---
 
 
 
@@ -302,11 +290,11 @@ The recommended way to launch the web application and scalable emulation environ
 
 
 
-\- Windows 10/11
+- Windows 10/11
 
-\- Python environment configured for the project
+- Python environment configured for the project
 
-\- Project dependencies installed
+- Project dependencies installed
 
 
 
@@ -358,7 +346,7 @@ The integration suite covers model inference, feature extraction, explainability
 
 
 
-\---
+---
 
 
 
@@ -416,9 +404,9 @@ The controller uses:
 
 
 
-\- OpenFlow 1.3: TCP port `6653`
+- OpenFlow 1.3: TCP port `6653`
 
-\- REST API: TCP port `8080`
+- REST API: TCP port `8080`
 
 
 
@@ -506,7 +494,7 @@ These scenarios allow the detection and mitigation pipeline to be evaluated agai
 
 
 
-\---
+---
 
 
 
@@ -550,7 +538,7 @@ The default model selection can be configured through the application environmen
 
 
 
-\---
+---
 
 
 
@@ -596,9 +584,9 @@ These statuses distinguish the execution environments:
 
 
 
-\- **OF 1.3 Emulated:** The application is operating with its logical OpenFlow 1.3 emulation pipeline without a connected real Ryu controller.
+- **OF 1.3 Emulated:** The application is operating with its logical OpenFlow 1.3 emulation pipeline without a connected real Ryu controller.
 
-\- **Ryu Connected:** The application has detected the configured Ryu controller connection.
+- **Ryu Connected:** The application has detected the configured Ryu controller connection.
 
 
 
@@ -618,7 +606,7 @@ For larger experiments, use scalable logical emulation.
 
 
 
-\---
+---
 
 
 
@@ -660,7 +648,7 @@ SentiNex/
 
 
 
-\---
+---
 
 
 
@@ -672,9 +660,9 @@ SentiNex uses traffic feature conventions associated with:
 
 
 
-\- CICIDS2018
+- CICIDS2018
 
-\- UNSW-NB15
+- UNSW-NB15
 
 
 
@@ -690,7 +678,7 @@ Large model artifacts may be maintained using Git Large File Storage (Git LFS).
 
 
 
-\---
+---
 
 
 
@@ -706,7 +694,7 @@ For the complete operator instructions, including Windows/WSL2 setup, controller
 
 
 
-\---
+---
 
 
 
@@ -722,7 +710,7 @@ Its dual-mode architecture supports both large-scale logical network experiments
 
 
 
-\---
+---
 
 
 
